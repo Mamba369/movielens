@@ -1,0 +1,22 @@
+version: '3.1'
+services:
+  database:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: movielens
+      MYSQL_USER: alex
+      MYSQL_PASSWORD: alex
+    ports:
+      - "3307:3306"
+    volumes: 
+      - ./init:/docker-entrypoint-initdb.d
+      - ./ml-latest-small:/ml-latest-small
+  app:
+    build: .
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./src:/src
+  
